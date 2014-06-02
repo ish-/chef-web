@@ -6,40 +6,35 @@ chef.config ($httpProvider) ->
 
 chef.service 'provision', class Provision
   constructor: (@$http) ->
-    # wrapper = 
-    #   Nodes: $resource '/api/nodes', name: '@name',
-    #     query:
-    #       isArray: no
-    #     update:
-    #       url: '/api/nodes/:name'
-    #       method: 'PUT'
 
-    # angular.each wrapper, (res, name) =>
-    #   angular.extend this, name
+  nodes: (opts) -> @wrap angular.extend url: '/api/nodes', opts
 
+  roles: (opts) -> @wrap angular.extend url: '/api/roles', opts
 
-  getNode: (name, force) -> @wrap 
-    method: 'GET'
-    url: '/api/nodes/' + name
-    cache: !force
+  getCookbooks: (force) ->
+    @cookbooks ?= {}
+    @$http.get '/api/cookbooks', cache: !force
+      .success (d) => angular.extend @cookbooks, d
+    return @cookbooks
 
-  getNodes: (force) -> @wrap 
-    method: 'GET'
-    url: '/api/nodes'
-    cache: !force
+  getRecipes: (bookName, version, force) -> 
+    version.$pending = yes
+    @$http.get '/api/cookbooks/' + bookName + '/' + version.version, cache: !force
+      .success (d) =>
+        version.recipes = d.recipes
+        version.$pending = no
 
-  getRoles: (force) -> @wrap
-    method: 'GET'
-    url: '/api/roles'
-    cache: !force
+  wrap: (opts) ->
+    # w = if isArray then [] else {}
+    if opts.data? and opts.data.name?
+      opts.url += ('/' + opts.data.name)
+    opts.cache = !opts.force
 
-  wrap: (config, isArray) ->
-    w = if isArray then [] else {}
-    angular.extend w,
+    w =
       $pending: yes
       $error: no
 
-    http = @$http config
+    http = @$http opts
     
     http.success (data) -> 
       angular.extend w, data

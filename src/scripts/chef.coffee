@@ -22,5 +22,7 @@ chef.config ($routeProvider, $locationProvider) ->
 
 chef.run -> console.log 'App started!'
 
-chef.controller 'BodyController', ($scope) ->
-  console.log 'BodyController inited!'
+chef.controller 'BodyController', ($scope, provision) ->
+  # $scope.roles = provision.roles()
+  $scope.cookbooks = provision.getCookbooks()
+  $scope.getRecipes = provision.getRecipes.bind provision

@@ -1,1 +1,8 @@
-div {{ node }}
+style.
+  .margin {margin-left: 20px}
+div {{ node.run_list }}
+div(ng-repeat="(bookName, book) in cookbooks") {{ bookName }}
+  .margin(ng-repeat="version in book.versions", ng-click="getRecipes(bookName, version); showRecipes = !showRecipes") {{ version.version }}
+    .loading-spinner(ng-show="version.$pending")
+    .margin(ng-if="showRecipes")
+      div(ng-repeat="recipe in version.recipes") {{ recipe.name }}
