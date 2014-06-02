@@ -1,0 +1,22 @@
+.row
+  .col-md-9
+    table.table.table-striped.nodes(style="margin-top: 20px", ng-show="!nodes.length")
+      thead
+        tr
+          th Name 
+          th IP
+          th Uptime
+          th Platform
+          th FQDN
+            .pull-right(ng-switch="nodes.$pending")
+              .loading-spinner(ng-switch-when="true")
+              i.glyphicon.glyphicon-refresh(ng-switch-when="false", ng-click="getNodes(true)")
+      tr.node(ng-repeat="(name, url) in nodes", ng-controller="NodeController", ng-click="showNode(name)")
+        td(data-title="Name") 
+          | {{name}} 
+          .loading-spinner(ng-show="node.$pending")
+        td(data-title="IP") {{node.automatic.ipaddress}}
+        td(data-title="Uptime") {{node.automatic.uptime_seconds}}
+        td(data-title="Platform") {{node.automatic.platform}}
+        td(data-title="FQDN") {{node.automatic.fqdn}}
+  .col-xs-12.col-md-3
