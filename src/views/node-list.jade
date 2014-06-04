@@ -19,4 +19,7 @@
         td(data-title="Uptime") {{node.automatic.uptime_seconds}}
         td(data-title="Platform") {{node.automatic.platform}}
         td(data-title="FQDN") {{node.automatic.fqdn}}
-  .col-xs-12.col-md-3
+  aside.col-xs-12.col-md-3.control
+    .form-group
+      label Environment
+      select.form-control(ng-model="environments.current", ng-options="env.name for env in environments")

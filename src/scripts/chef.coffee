@@ -1,4 +1,4 @@
-chef = angular.module 'chef', ['ngRoute', 'ui.buttons']
+chef = angular.module 'chef', ['ngRoute', 'ngDragDrop', 'ui.buttons']
 
 
 chef.config ($routeProvider, $locationProvider) ->
@@ -24,5 +24,7 @@ chef.run -> console.log 'App started!'
 
 chef.controller 'BodyController', ($scope, provision) ->
   # $scope.roles = provision.roles()
-  $scope.cookbooks = provision.getCookbooks()
-  $scope.getRecipes = provision.getRecipes.bind provision
+  # $scope.cookbooks = provision.getCookbooks()
+  # $scope.getRecipes = provision.getRecipes.bind provision
+  $scope.environments = provision.environments
+  $scope.roles = provision.roles()

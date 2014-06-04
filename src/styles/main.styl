@@ -39,3 +39,37 @@ header
 .nodes
   .node
     cursor: pointer
+
+aside.control
+  padding-top: 25px
+
+
+.node
+  .recipes, .roles
+    list-style: none
+
+    li
+      cursor: pointer
+
+  .run-list li
+    margin-left: 20px
+    cursor: pointer
+
+    .remove
+      display: none
+      float: right
+
+    &:hover .remove
+      display: inline
+
+    &.on-drag-hover
+        padding-top: 1em
+    &.on-drag
+      opacity: .1
+
+      .remove
+        display: none
+
+    span
+      font-size: 100%
+      padding: .1em .5em .2em

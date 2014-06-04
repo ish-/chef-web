@@ -6,35 +6,37 @@ chef.config ($httpProvider) ->
 
 chef.service 'provision', class Provision
   constructor: (@$http) ->
+    @environments = []
+    @environments.$xhr = $http.get '/api/environments'
+      .success (d) =>
+        angular.forEach d, (env, name) =>
+          @environments.push env = 
+            name: name
+            recipes: []
+          if env.name is '_default'
+            @environments.current = env
+      .then @_getRecipes
+
+
 
   nodes: (opts) -> @wrap angular.extend url: '/api/nodes', opts
-
   roles: (opts) -> @wrap angular.extend url: '/api/roles', opts
 
-  getCookbooks: (force) ->
-    @cookbooks ?= {}
-    @$http.get '/api/cookbooks', cache: !force
-      .success (d) => angular.extend @cookbooks, d
-    return @cookbooks
-
-  getRecipes: (bookName, version, force) -> 
-    version.$pending = yes
-    @$http.get '/api/cookbooks/' + bookName + '/' + version.version, cache: !force
-      .success (d) =>
-        version.recipes = d.recipes
-        version.$pending = no
+  _getRecipes: (force) => 
+    env = @environments.current
+    @$http.get '/api/environments/' + env.name + '/recipes', cache: !force
+      .success (d) -> env.recipes = d
 
   wrap: (opts) ->
-    # w = if isArray then [] else {}
+    w = if opts.isArray then [] else {}
     if opts.data? and opts.data.name?
       opts.url += ('/' + opts.data.name)
-    opts.cache = !opts.force
+    opts.cache = !opts.method and !opts.force
 
-    w =
-      $pending: yes
-      $error: no
+    w.$pending = yes
+    w.$error = no
 
-    http = @$http opts
+    w.$promise = http = @$http opts
     
     http.success (data) -> 
       angular.extend w, data

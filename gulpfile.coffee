@@ -43,6 +43,7 @@ scripts = ->
 
 vendorScripts = ->
   gu.src([
+    PATH.SRC_LIBS + 'angular.js'
     PATH.SRC_LIBS + '**/*.js'
     '!' + PATH.SRC_LIBS + '**/_*'
   ]).pipe concat 'vendor.js'
