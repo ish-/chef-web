@@ -11,7 +11,7 @@
             .pull-right(ng-switch="nodes.$pending")
               .loading-spinner(ng-switch-when="true")
               i.glyphicon.glyphicon-refresh(ng-switch-when="false", ng-click="getNodes(true)")
-      tr.node(ng-repeat="(name, url) in nodes", ng-controller="NodeController", ng-click="showNode(name)")
+      tr.node(ng-repeat="(name, url) in nodes", ng-controller="NodeController as ctrl", ng-click="showNode(name)")
         td(data-title="Name") 
           | {{name}} 
           .loading-spinner(ng-show="node.$pending")

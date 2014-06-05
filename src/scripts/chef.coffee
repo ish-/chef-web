@@ -1,4 +1,4 @@
-chef = angular.module 'chef', ['ngRoute', 'ngDragDrop', 'ui.buttons']
+chef = angular.module 'chef', ['ngRoute', 'ngDragDrop']
 
 
 chef.config ($routeProvider, $locationProvider) ->
@@ -11,11 +11,16 @@ chef.config ($routeProvider, $locationProvider) ->
 
     .when '/nodes/:name',
       controller: 'NodeController'
+      controllerAs: 'ctrl'
       templateUrl: 'node.html'
 
-    .when '/roles/:name',
+    .when '/roles/',
       controller: 'RoleListController',
       templateUrl: 'role-list.html'
+
+    .when '/roles/:name',
+      controller: 'RoleController',
+      templateUrl: 'role.html'
 
   # $routeProvider.otherwise '/nodes/'
   $locationProvider.html5Mode true

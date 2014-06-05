@@ -19,11 +19,11 @@ angular.module('ui.buttons', [])
       var buttonsCtrl = ctrls[0], ngModelCtrl = ctrls[1];
 
       //model -> UI
-      ngModelCtrl.$viewChangeListeners.push(onViewChange);
 
       function onViewChange () {
         element.toggleClass(buttonsCtrl.activeClass, angular.equals(ngModelCtrl.$modelValue, scope.$eval(attrs.btnRadio)));
       }
+      ngModelCtrl.$viewChangeListeners.push(onViewChange);
 
       $timeout(onViewChange)
 

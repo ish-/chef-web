@@ -1,9 +1,9 @@
-.node(style="margin-top: 25px")
-  .loading-spinner(ng-show="node.$pending")
-  .alert.alert-danger(ng-show="node.$error") {{ node.$error.error }}
-  .col-md-9.row(ng-if="node.$success")
-    p Name: {{ node.name }}
-    p IP: {{ node.automatic.ipaddress }}
+.role(style="margin-top: 25px")
+  .loading-spinner(ng-show="role.$pending")
+  .alert.alert-danger(ng-show="role.$error") {{ role.$error.error }}
+  .col-md-9.row(ng-if="role.$success")
+    p Name: {{ role.name }}
+    p Description: {{ role.description }}
     hr
     .run-list.row(ng-controller="RunListController as ctrl")
       .col-md-4
@@ -11,7 +11,7 @@
           .panel-heading Roles
             .loading-spinner.pull-right(ng-show="roles.$pending")
           ul.panel-body.roles(style="overflow: auto; max-height: 200px;")
-            li(ng-repeat="(roleName, role) in roles", ng-click="ctrl.add('role', roleName)") {{ roleName }}
+            li(ng-repeat="(roleName, _role) in roles | filter:filterRole", ng-click="ctrl.add('role', roleName)") {{ roleName }}
       .col-md-4
         .panel.panel-info
           .panel-heading Recipes

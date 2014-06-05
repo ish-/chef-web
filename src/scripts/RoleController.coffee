@@ -1,21 +1,24 @@
-chef.controller 'NodeController', class NodeController
+chef.controller 'RoleController', class RoleController
   constructor: (@$scope, @provision, @$routeParams) ->
-    $scope.$on 'node:reload', @getNode
-    $scope.node = do ($scope.getNode = @getNode)
+    $scope.$on 'role:reload', @getRole
+    $scope.role = do ($scope.getRole = @getRole)
     $scope.updateRunList = @updateRunList
 
+    $scope.filterRole = (name) ->
+      $scope.role.name isnt name
 
-  getNode: (force = false) => 
-    @provision.nodes
+  getRole: (force = false) => 
+    @provision.roles
       data:
         name: @$scope.name or @$routeParams.name
       force: force
 
+
   updateRunList: (runList) =>
     run_list = runList.map (v) ->
       v.essence + '[' + v.name + ']'
-    update = @provision.nodes
+    update = @provision.roles
       method: 'PUT'
       data:
-        name: @$scope.node.name
+        name: @$scope.role.name
         run_list: run_list

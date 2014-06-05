@@ -1,0 +1,19 @@
+.row
+  .col-md-9
+    table.table.table-striped.roles(style="margin-top: 20px", ng-show="!roles.length")
+      thead
+        tr
+          th Name 
+          th Desc
+            .pull-right(ng-switch="roles.$pending")
+              .loading-spinner(ng-switch-when="true")
+              i.glyphicon.glyphicon-refresh(ng-switch-when="false", ng-click="getRoles(true)")
+      tr.role(ng-repeat="(name, url) in roles", ng-controller="RoleController as ctrl", ng-click="showRole(name)")
+        td(data-title="Name") 
+          | {{name}} 
+          .loading-spinner(ng-show="role.$pending")
+        td(data-title="Desc") {{role.description}}
+  aside.col-xs-12.col-md-3.control
+    .form-group
+      label Environment
+      select.form-control(ng-model="environments.current", ng-options="env.name for env in environments")

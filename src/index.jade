@@ -14,15 +14,15 @@ html(ng-app="chef")
   body(ng-controller="BodyController")
     header.container
       .line
-      ul.nav.nav-tabs(ng-controller="TabListController", ng-model="tab")
-        li(btn-radio="'nodes'")
+      ul.nav.nav-tabs(ng-controller="TabListController")
+        li(depend-location="^/nodes")
           a(href="/nodes/") Servers
-        li(btn-radio="'roles'")
+        li(depend-location="^/roles")
           a(href="/roles/") Roles
+        li(depend-location="^/databags")
+          a(href="/databags/") Databags
         //- li(btn-radio="'cookbooks'")
         //-   a(href="/cookbooks/") Cookbooks
-        li(btn-radio="'databags'")
-          a(href="/databags/") Databags
         img.pull-right.hidden-xs(src="http://selectel.ru/media/img/logo.svg")
         .aside-toggle.pull-right.visible-xs
           .icon-bar

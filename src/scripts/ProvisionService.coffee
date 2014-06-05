@@ -40,6 +40,7 @@ chef.service 'provision', class Provision
     
     http.success (data) -> 
       angular.extend w, data
+      w.$success = yes
     http.error (err) -> w.$error = err
     http.finally -> w.$pending = no
     return w

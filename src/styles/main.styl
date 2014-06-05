@@ -36,15 +36,17 @@ header
   background-size: 16px
   cursor: pointer
 
-.nodes
-  .node
+.nodes .node, .roles .role
     cursor: pointer
 
 aside.control
   padding-top: 25px
 
 
-.node
+.node, .role
+  ol, ul
+    margin-bottom: 0px
+
   .recipes, .roles
     list-style: none
 
@@ -54,6 +56,7 @@ aside.control
   .run-list li
     margin-left: 20px
     cursor: pointer
+    transition: padding-top .2s ease
 
     .remove
       display: none
