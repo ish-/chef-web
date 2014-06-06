@@ -16,7 +16,7 @@
           | {{name}} 
           .loading-spinner(ng-show="node.$pending")
         td(data-title="IP") {{node.automatic.ipaddress}}
-        td(data-title="Uptime") {{node.automatic.uptime_seconds}}
+        td(data-title="Uptime") {{node.automatic.uptime_seconds | durationTime}}
         td(data-title="Platform") {{node.automatic.platform}}
         td(data-title="FQDN") {{node.automatic.fqdn}}
   aside.col-xs-12.col-md-3.control
