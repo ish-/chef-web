@@ -10,6 +10,10 @@ chef.config ($routeProvider, $locationProvider) ->
       templateUrl: 'node-list.html'
 
     .when '/nodes/:name',
+      redirectTo: (p) -> '/nodes/' + p.name + '/info'
+
+    .when '/nodes/:name/:act',
+      reloadOnSearch: no
       controller: 'NodeController'
       controllerAs: 'ctrl'
       templateUrl: 'node.html'
@@ -28,9 +32,6 @@ chef.config ($routeProvider, $locationProvider) ->
 chef.run -> console.log 'App started!'
 
 chef.controller 'BodyController', ($scope, provision) ->
-  # $scope.roles = provision.roles()
-  # $scope.cookbooks = provision.getCookbooks()
-  # $scope.getRecipes = provision.getRecipes.bind provision
   $scope.environments = provision.environments
   $scope.roles = provision.roles()
 

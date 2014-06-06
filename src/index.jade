@@ -14,7 +14,7 @@ html(ng-app="chef")
   body(ng-controller="BodyController")
     header.container
       .line
-      ul.nav.nav-tabs(ng-controller="TabListController")
+      ul.nav.nav-tabs
         li(depend-location="^/nodes")
           a(href="/nodes/") Servers
         li(depend-location="^/roles")
@@ -28,4 +28,4 @@ html(ng-app="chef")
           .icon-bar
           .icon-bar
           .icon-bar
-    article.container(ng-view)
+    article.container(ng-view, style="padding-top: 25px")

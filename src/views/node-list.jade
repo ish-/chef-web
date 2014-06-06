@@ -1,25 +1,21 @@
-.row
-  .col-md-9
-    table.table.table-striped.nodes(style="margin-top: 20px", ng-show="!nodes.length")
-      thead
-        tr
-          th Name 
-          th IP
-          th Uptime
-          th Platform
-          th FQDN
-            .pull-right(ng-switch="nodes.$pending")
-              .loading-spinner(ng-switch-when="true")
-              i.glyphicon.glyphicon-refresh(ng-switch-when="false", ng-click="getNodes(true)")
-      tr.node(ng-repeat="(name, url) in nodes", ng-controller="NodeController as ctrl", ng-click="showNode(name)")
-        td(data-title="Name") 
-          | {{name}} 
-          .loading-spinner(ng-show="node.$pending")
-        td(data-title="IP") {{node.automatic.ipaddress}}
-        td(data-title="Uptime") {{node.automatic.uptime_seconds | durationTime}}
-        td(data-title="Platform") {{node.automatic.platform}}
-        td(data-title="FQDN") {{node.automatic.fqdn}}
-  aside.col-xs-12.col-md-3.control
-    .form-group
-      label Environment
-      select.form-control(ng-model="environments.current", ng-options="env.name for env in environments")
+include _aside-main
+.col-md-9.col-md-pull-3.col-xs-pull-0.row
+  table.table.table-striped.nodes(ng-show="!nodes.length")
+    thead
+      tr
+        th Name 
+        th IP
+        th Uptime
+        th Platform
+        th FQDN
+          .pull-right(ng-switch="nodes.$pending")
+            .loading-spinner(ng-switch-when="true")
+            i.glyphicon.glyphicon-refresh(ng-switch-when="false", ng-click="getNodes(true)")
+    tr.node(ng-repeat="(name, url) in nodes", ng-controller="NodeController as ctrl", ng-click="showNode(name)")
+      td(data-title="Name") 
+        | &nbsp;{{name}} 
+        .loading-spinner(ng-show="node.$pending")
+      td(data-title="IP") &nbsp;{{node.automatic.ipaddress}}
+      td(data-title="Uptime") &nbsp;{{node.automatic.uptime_seconds | durationTime}}
+      td(data-title="Platform") &nbsp;{{node.automatic.platform}} {{node.automatic.platform_version}}
+      td(data-title="FQDN") &nbsp;{{node.automatic.fqdn}}

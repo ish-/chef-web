@@ -49,8 +49,10 @@ vendorScripts = ->
   ]).pipe concat 'vendor.js'
 
 ngTpl = ->
-  gu.src PATH.SRC_VIEWS + '**/*.jade'
-    .pipe jade()
+  gu.src([
+    PATH.SRC_VIEWS + '**/*.jade'
+    '!' + PATH.SRC_VIEWS + '**/_*'
+  ]).pipe jade()
     .pipe ngTplCache module: 'chef'
 
 jsStream = ->

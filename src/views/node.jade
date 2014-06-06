@@ -1,11 +1,34 @@
-.node(style="margin-top: 25px")
+.node
   .loading-spinner(ng-show="node.$pending")
-  .alert.alert-danger(ng-show="node.$error") {{ node.$error.error }}
+  .alert.alert-danger(ng-if="node.$error") {{ node.$error.error }}
   .col-md-9.row(ng-if="node.$success")
-    p Name: {{ node.name }}
-    p IP: {{ node.automatic.ipaddress }}
+    table.table.table-striped
+      thead
+        tr
+          th Name 
+          th IP
+          th Uptime
+          th Platform
+          th FQDN
+            .pull-right(ng-switch="node.$pending")
+              .loading-spinner(ng-switch-when="true")
+              i.glyphicon.glyphicon-refresh(ng-switch-when="false", ng-click="getNode(true)")
+      tr
+        td(data-title="Name") 
+          | {{node.name}} 
+          .loading-spinner(ng-show="node.$pending")
+        td(data-title="IP") &nbsp;{{node.automatic.ipaddress}}
+        td(data-title="Uptime") &nbsp;{{node.automatic.uptime_seconds | durationTime}}
+        td(data-title="Platform") &nbsp;{{node.automatic.platform}}
+        td(data-title="FQDN") &nbsp;{{node.automatic.fqdn}}
     hr
-    .run-list.row(ng-controller="RunListController as ctrl")
+
+    ul.nav.nav-tabs.node(ng-model="nodeTab")
+      li(depend-location="^/nodes/.*/(roles)")
+        a(href="/nodes/{{node.name}}/roles") Roles
+      li(depend-location="^/nodes/.*/(info)")
+        a(href="/nodes/{{node.name}}/info") Information
+    .run-list.row(ng-controller="RunListController as ctrl", style="padding-top: 25px")
       .col-md-4
         .panel.panel-primary
           .panel-heading Roles
